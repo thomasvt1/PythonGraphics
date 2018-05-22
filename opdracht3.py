@@ -8,6 +8,8 @@ def drawline(x1, y1, x2, y2, c=1):
     min_x = min(x1, x2)
     min_y = min(y1, y2)
 
+    # First run two small if statements which are smaller and more efficient.
+
     if y1 == y2:
         length = abs(x1 - x2)
         print(length)
@@ -20,52 +22,53 @@ def drawline(x1, y1, x2, y2, c=1):
         for i in range(0, length):
             g.addPoint(x1, min_y + i, c)
 
-    else:
-        _x = abs(x1 - x2)
-        _y = abs(y1 - y2)
-        _angle = math.degrees((math.atan(_y / _x)))
-        print("! WARNING: No draw method found")
-        print(_angle)
-        print(_x)
+    else:  # If no easy method is found run the advanced method.
+        angle_tot = 0
+        x = x1  # Pick x1 - start value
+        y = y1  # Pick y1 - start value
 
-        if _angle == 45:
-            for i in range(0, _x):
-                g.addPoint(min_x + i, min_y + i, c)
+        y_temp = abs(y1 - y2)
+        x_temp = abs(x2 - x1)
 
+        angle = math.degrees(math.atan2(y_temp, x_temp))  # calculates the angle of the line for y value
+
+        angle_x = 90 - angle  # angle of line for calculations for the x value
+        angle_x_tot = 0
+
+        has_gone = False
+        has_gone_x = False
+
+        if x_temp > y_temp:  # checks if x or y is bigger to determine the line length
+            line_length = x_temp
         else:
-            has_gone = False
-            anglex = 90 - _angle
-            has_gonex = False
+            line_length = y_temp
 
-            angle_tot = 0
-            anglex_tot = 0
+        for i in range(0, line_length):
+            g.addPoint(x, y, c)
 
-            line_length = _x
+            if angle <= 45:  # checks if the degree is more or less than 45
+                x += 1
+            else:
+                angle_x_tot += angle_x  # adds to total to see how far the line is in correlation to the gridsquares
+                if angle_x_tot > 22.5 and has_gone_x is False:
+                    x += 1
+                    has_gone_x = True
+                if angle_x_tot >= 45:
+                    angle_x_tot -= 45
+                    has_gone_x = False
 
-            angle = _angle / 45
-            anglex /= 45
+            angle_tot += angle
 
-            print("angle: ", angle)
-            for i in range(0, line_length):
-                g.addPoint(x1, y1, c)
-                if angle <= 1:
-                    x1 += 1
+            if angle_tot > 22.5 and has_gone is False:
+                if y1 > y2:
+                    y -= 1
                 else:
-                    anglex_tot += anglex
-                    if anglex_tot > 0.5 and has_gonex == False:
-                        x1 += 1
-                        has_gonex = True
-                    if anglex_tot >= 1:
-                        anglex_tot -= 1
-                        has_gonex = False
-                angle_tot += angle
-                if angle_tot > 0.5 and has_gone is False:
-                    y1 += 1
-                    has_gone = True
-                if angle_tot >= 1:
-                    angle_tot -= 1
-                    has_gone = False
-                print("AnglexTot: ", anglex_tot, "hasGonex: ", has_gonex)
+                    y += 1
+                has_gone = True
+
+            if angle_tot >= 45:
+                angle_tot -= 45
+                has_gone = False
 
 
 
@@ -75,6 +78,14 @@ def drawline(x1, y1, x2, y2, c=1):
 #drawline(1, 1, 6, 6)
 #drawline(10, 10, 6, 6)
 #drawline(3, 3, 0, 0)
+#drawline(10, 5, 0, 0)
+
+#drawline(0, 10, 10, 0)
+
+#drawline(10, 10, 0, 0)
+
+#drawline(10, 5, 0, 0)
 drawline(0, 0, 10, 5)
+#drawline(0, 0, 5, 10, 0.5)
 
 g.draw()
