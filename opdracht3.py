@@ -1,4 +1,5 @@
 from grid import *
+import math
 
 g = Grid(20, 20)
 
@@ -18,14 +19,20 @@ def drawline(x1, y1, x2, y2, c=1):
         for i in range(0, length):
             g.addPoint(x1, y + i, c)
 
-
     else:
+        _x = abs(x1 - x2)
+        _y = abs(y1 - y2)
+        angle = math.degrees((math.atan(_y / _x)))
         print("! ERROR: No draw method found")
+        print(angle)
+
+
+
 
 
 drawline(5, 0, 0, 0)
 drawline(0, 15, 0, 5)
+drawline(0, 0, 3, 3)
 
-g.addPoint(15, 15)
 
 g.draw()
