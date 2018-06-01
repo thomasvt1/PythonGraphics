@@ -1,4 +1,6 @@
-import sys, math, pygame
+import sys
+import math
+import pygame
 
 
 class Point3D:
@@ -72,10 +74,10 @@ class Simulation:
             self.screen.fill((0, 0, 0))
 
             for f in self.faces:
-                pygame.draw.line(self.screen, (255,255,255), (t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y))
-                pygame.draw.line(self.screen, (255,255,255), (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
-                pygame.draw.line(self.screen, (255,255,255), (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
-                pygame.draw.line(self.screen, (255,255,255), (t[f[3]].x, t[f[3]].y), (t[f[0]].x, t[f[0]].y))
+                pygame.draw.line(self.screen, (255, 255, 255), (t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y))
+                pygame.draw.line(self.screen, (255, 255, 255), (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
+                pygame.draw.line(self.screen, (255, 255, 255), (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
+                pygame.draw.line(self.screen, (255, 255, 255), (t[f[3]].x, t[f[3]].y), (t[f[0]].x, t[f[0]].y))
 
             self.angleX += 1
             self.angleY += 1
