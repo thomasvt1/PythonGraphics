@@ -32,19 +32,19 @@ class Simulation:
         self.clock = pygame.time.Clock()
 
         self.vertices = [
-            Point3D(-1,1,-1),
-            Point3D(1,1,-1),
-            Point3D(1,-1,-1),
-            Point3D(-1,-1,-1),
-            Point3D(-1,1,1),
-            Point3D(1,1,1),
-            Point3D(1,-1,1),
-            Point3D(-1,-1,1)
+            Point3D(-1, 1, -1),
+            Point3D(1, 1, -1),
+            Point3D(1, -1, -1),
+            Point3D(-1, -1, -1),
+            Point3D(-1, 1, 1),
+            Point3D(1, 1, 1),
+            Point3D(1, -1, 1),
+            Point3D(-1, -1, 1)
         ]
 
         # Define the vertices that compose each of the 6 faces. These numbers are
         # indices to the vertices list defined above.
-        self.faces = [(0, 1, 2, 3), (1, 5, 6, 2), (5, 4, 7, 6),(4,0,3,7),(0,4,5,1),(3,2,6,7)]
+        self.faces = [(0, 1, 2, 3), (1, 5, 6, 2), (5, 4, 7, 6), (4, 0, 3, 7), (0, 4, 5, 1), (3, 2, 6, 7)]
 
         self.angleX, self.angleY, self.angleZ = 0, 0, 0
 
