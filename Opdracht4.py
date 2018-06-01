@@ -14,15 +14,6 @@ class Point3D:
         x = self.z * sina + self.x * cosa
         return Point3D(x, self.y, z)
 
-    def rotateZ(self, angle):
-        """ Rotates the point around the Z axis by the given angle in degrees. """
-        rad = angle * math.pi / 180
-        cosa = math.cos(rad)
-        sina = math.sin(rad)
-        x = self.x * cosa - self.y * sina
-        y = self.x * sina + self.y * cosa
-        return Point3D(x, y, self.z)
-
     def project(self, win_width, win_height, fov, viewer_distance):
         """ Transforms this 3D point to 2D using a perspective projection. """
         factor = fov / (viewer_distance + self.z)
@@ -36,7 +27,7 @@ class Simulation:
         pygame.init()
 
         self.screen = pygame.display.set_mode((win_width, win_height))
-        pygame.display.set_caption("3D Wireframe Cube Simulation (http://codeNtronix.com)")
+        pygame.display.set_caption("Thomas's Amazing Cube")
 
         self.clock = pygame.time.Clock()
 
