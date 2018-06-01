@@ -1,7 +1,5 @@
-import sys
 import math
-import pygame
-
+from lines import *
 
 class Point3D:
     def __init__(self, x=0, y=0, z=0):
@@ -26,12 +24,6 @@ class Point3D:
 
 class Simulation:
     def __init__(self, win_width = 640, win_height = 480):
-        pygame.init()
-
-        self.screen = pygame.display.set_mode((win_width, win_height))
-        pygame.display.set_caption("Thomas's Amazing Cube")
-
-        self.clock = pygame.time.Clock()
 
         self.vertices = [
             Point3D(-1, 1, -1),
@@ -51,40 +43,28 @@ class Simulation:
         self.angleX, self.angleY, self.angleZ = 0, 0, 0
 
     def run(self):
-        """ Main Loop """
-
+        # Create lines class
+        l = Lines(640, 480)
         # Will hold transformed vertices.
         t = []
 
         for v in self.vertices:
             # Rotate the point around X axis, then around Y axis, and finally around Z axis.
-            #r = v.rotateX(self.angleX).rotateY(self.angleY).rotateZ(self.angleZ)
             r = v.rotateY(30)
+
             # Transform the point from 3D to 2D
-            p = r.project(self.screen.get_width(), self.screen.get_height(), 256, 4)
+            p = r.project(640, 480, 256, 4)
+
             # Put the point in the list of transformed vertices
             t.append(p)
 
-        while 1:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+        for f in self.faces:
+            l.addLine((t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y))
+            l.addLine((t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
+            l.addLine((t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
+            l.addLine((t[f[3]].x, t[f[3]].y), (t[f[0]].x, t[f[0]].y))
 
-            self.clock.tick(50)
-            self.screen.fill((0, 0, 0))
-
-            for f in self.faces:
-                pygame.draw.line(self.screen, (255, 255, 255), (t[f[0]].x, t[f[0]].y), (t[f[1]].x, t[f[1]].y))
-                pygame.draw.line(self.screen, (255, 255, 255), (t[f[1]].x, t[f[1]].y), (t[f[2]].x, t[f[2]].y))
-                pygame.draw.line(self.screen, (255, 255, 255), (t[f[2]].x, t[f[2]].y), (t[f[3]].x, t[f[3]].y))
-                pygame.draw.line(self.screen, (255, 255, 255), (t[f[3]].x, t[f[3]].y), (t[f[0]].x, t[f[0]].y))
-
-            self.angleX += 1
-            self.angleY += 1
-            self.angleZ += 1
-
-            pygame.display.flip()
+        l.draw()
 
 
-if __name__ == "__main__":
-    Simulation().run()
+Simulation().run()
